@@ -32,45 +32,71 @@
 
   <body>
     <div class="reveal">
-      <div class="slides">
-        <section data-markdown="collapse-heating/slide.md"></section>
-        <section data-markdown="decoding-images/slide.md"></section>
-        <section data-markdown="orion-observe/slide.md"></section>
-        <section data-markdown="storytelling-triangle/slide.md"></section>
-        <section data-markdown="three-body/slide.md"></section>
-        <section data-markdown="vg-composability/slide.md"></section>
-        <section data-markdown="vg-kh-evolve/slide.md"></section>
-        <section data-markdown="vg-kh-path/slide.md"></section>
-        <section data-markdown="vg-kh-selection/slide.md"></section>
-        <section data-markdown="vg-particle-registration/slide.md"></section>
-        <section data-markdown="vg-registration/slide.md"></section>
-        <section data-markdown="vg-transformations/slide.md"></section>
+      <div class="slides" id="mainslides">
+        <section data-markdown="toc.md"></section>
       </div>
     </div>
 <script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
-    Reveal.initialize({
-        fragments: true,
-        fragmentInURL: true,
-		    hash: true,
-        width: 1024,
-        height: 768,
-        margin: 0.02,
-        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath, CopyCode],
-        dependencies: [
-            { src: 'https://cdn.jsdelivr.net/npm/reveald3/reveald3.js'}
-        ],
-		keyboard: {
-		},
-        center: false,
-        transition: 'none',
-        backgroundTransition: 'none',
-        reveald3: {
-            runLastState: false
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      function ready(fn) {
+        if (document.readyState != 'loading') {
+          fn();
+        } else {
+          document.addEventListener('DOMContentLoaded', fn);
         }
-    });
+      }
+      function initializeTalk() {
+        var request = new XMLHttpRequest();
+        request.open('GET', './figures.json', true);
+
+        request.onload = function () {
+          if (this.status >= 200 && this.status < 400) {
+            // Success!
+            var data = JSON.parse(this.response);
+            const topLevel = document.getElementById("mainslides");
+            for (const category of Object.keys(data)) {
+              console.log("Adding category", category);
+              for (const figure of data[category]) {
+                console.log("Adding figure", figure["directory"]);
+                section = document.createElement("section");
+                section.setAttribute("id", figure["directory"]);
+                section.setAttribute("data-markdown", `${figure["directory"]}/slide.md`);
+                topLevel.appendChild(section);
+              }
+            }
+            Reveal.initialize({
+              fragments: true,
+              fragmentInURL: true,
+              hash: true,
+              width: 1024,
+              height: 768,
+              margin: 0.02,
+              plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath, CopyCode],
+              dependencies: [
+                { src: 'https://cdn.jsdelivr.net/npm/reveald3/reveald3.js' }
+              ],
+              keyboard: {
+              },
+              center: false,
+              transition: 'none',
+              backgroundTransition: 'none',
+              reveald3: {
+                runLastState: false
+              }
+            });
+          } else {
+            // We reached our target server, but it returned an error
+
+          }
+          request.onerror = function () {
+            // There was a connection error of some sort
+          };
+        };
+        request.send();
+      }
+      ready(initializeTalk);
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
   </body>

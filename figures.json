@@ -1,0 +1,54 @@
+{
+    "General Purpose": [
+        {
+            "name": "Collapse Heating",
+            "directory": "collapse-heating"
+        },
+        {
+            "name": "Decoding Images",
+            "directory": "decoding-images"
+        },
+        {
+            "name": "Orion Observing",
+            "directory": "orion-observe"
+        },
+        {
+            "name": "Storytelling Triangle",
+            "directory": "storytelling-triangle"
+        },
+        {
+            "name": "Three Body",
+            "directory": "three-body"
+        }
+    ],
+    "Volume Grammar": [
+        {
+            "name": "Composability",
+            "directory": "vg-composability"
+        },
+        {
+            "name": "KH Evolution",
+            "directory": "vg-kh-evolve"
+        },
+        {
+            "name": "KH Path",
+            "directory": "vg-kh-path"
+        },
+        {
+            "name": "KH Selection",
+            "directory": "vg-kh-selection"
+        },
+        {
+            "name": "Particle Registration",
+            "directory": "vg-particle-registration"
+        },
+        {
+            "name": "Registration",
+            "directory": "vg-registration"
+        },
+        {
+            "name": "Transformations",
+            "directory": "vg-transformations"
+        }
+    ]
+}
