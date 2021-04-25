@@ -67,14 +67,13 @@
             const topLevel = document.getElementById("mainslides");
             const tocColumns = document.getElementById("tocColumns");
             for (const category of Object.keys(data)) {
-              console.log("Adding category", category);
               const catColumn = document.createElement("div");
               catColumn.setAttribute("class", "col");
               const catFigures = document.createElement("ul");
+              catColumn.innerHTML = `<h2>${category}</h2>`;
               catColumn.append(catFigures);
               tocColumns.append(catColumn);
               for (const figure of data[category]) {
-                console.log("Adding figure", figure["directory"]);
                 const entry = document.createElement("li");
                 entry.innerHTML = `<a href="#${figure["directory"]}">${figure["name"]}</a>`
                 catFigures.append(entry);
