@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+  </head>
+  <body>
+    <div id="vis"></div>
+    
+    <script type="text/javascript">
+
+        const svg = d3
+                    .select("#vis")
+                    .append("svg")
+                    .attr("height", 500)
+                    .attr("width", 500)
+                    .attr("viewport", [0, 500, 0, 500]);
+
+                const components = [
+                            {fn: 'oreja.svg', x: 320, y: 450},
+                            {fn: 'bubble.svg', x: 100, y: 130},
+                            {fn: 'jean_victor_balin_book.svg', x: 450, y: 130}
+                        ];
+
+                const lines = [
+                            {x1: 425, y1: 175, x2: 200, y2: 175}, // bubble book
+                            {x1: 175, y1: 200, x2: 325, y2: 450}, // ear bubble
+                            {x1: 375, y1: 450, x2: 425, y2: 200}  // ear book
+                            ];
+
+                function setup() {
+                            svg
+                                .selectAll("image")
+                                .data(components)
+                                .enter()
+                                .append("svg:image")
+                                .attr("xlink:href", d => '../assets/images/' + d.fn)
+                                .attr('x', d => d.x - 100)
+                                .attr('y', d => d.y - 50)
+                                .attr("id", d => "img-" + d.fn.slice(0,-4))
+                                .attr("width", "80px")
+                                .style("opacity", 0.0);
+                        }
+
+                function fadeInEar() {
+                            svg
+                                .selectAll("#img-oreja")
+                                .transition()
+                                .duration(3000)
+                                .style("opacity", 1.0);
+                        }
+
+                function fadeInBubble() {
+                            svg
+                                .selectAll("#img-bubble")
+                                .transition()
+                                .duration(3000)
+                                .style("opacity", 1.0);
+                        }
+
+                function fadeInBook() {
+                            svg
+                                .selectAll("#img-jean_victor_balin_book")
+                                .transition()
+                                .duration(3000)
+                                .style("opacity", 1.0);
+                        }
+
+                function drawConnections() {
+                            svg.selectAll("line")
+                            .data(lines)
+                            .enter()
+                            .append("line")
+                                .attr("x1", d => d.x1 - 100)
+                                .attr("y1", d => d.y1 - 50)
+                                .attr("x2", d => d.x1 - 100)
+                                .attr("y2", d => d.y1 - 50)
+                            .style("stroke", "gray")
+                            .style("stroke-width", 10.0)
+                            .transition()
+                                .delay((d, i) => i * 10000)
+                            .style("stroke-linecap", "round")
+                            .duration(1500)
+                                .attr("x2", d=> d.x2 - 100)
+                                .attr("y2", d=>d.y2 - 50);
+                        }
+
+                function doAll() {
+                    _transitions.forEach( o => o.transitionForward() );
+                        }
+
+                var _transitions = [{ transitionForward: () => setup()},
+                            {transitionForward: () => fadeInBubble()},
+                            {transitionForward: () => fadeInBook()},
+                            {transitionForward: () => fadeInEar()},
+                            {transitionForward: () => drawConnections()}
+                            ];
+
+    </script>
+  </body>
+</html>
