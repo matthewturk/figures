@@ -33,7 +33,16 @@
   <body>
     <div class="reveal">
       <div class="slides" id="mainslides">
-        <section data-markdown="toc.md"></section>
+        <section class="titleslide">
+          <h1>Figures</h1>
+          <h2>Matthew Turk</h2>
+          <p><tt>matthewturk@gmail.com</tt><br/><tt>matthewturk.github.io</tt></p>
+        </section>
+        <section class="tocslide">
+          <h1>Table of Contents - for real</h1>
+          <div class="multiCol" id="tocColumns">
+          </div>
+        </section>
       </div>
     </div>
 <script>
@@ -56,10 +65,19 @@
             // Success!
             var data = JSON.parse(this.response);
             const topLevel = document.getElementById("mainslides");
+            const tocColumns = document.getElementById("tocColumns");
             for (const category of Object.keys(data)) {
               console.log("Adding category", category);
+              const catColumn = document.createElement("div");
+              catColumn.setAttribute("class", "col");
+              const catFigures = document.createElement("ul");
+              catColumn.append(catFigures);
+              tocColumns.append(catColumn);
               for (const figure of data[category]) {
                 console.log("Adding figure", figure["directory"]);
+                const entry = document.createElement("li");
+                entry.innerHTML = `<a href="#${figure["directory"]}">${figure["name"]}</a>`
+                catFigures.append(entry);
                 section = document.createElement("section");
                 section.setAttribute("id", figure["directory"]);
                 section.setAttribute("data-markdown", `${figure["directory"]}/slide.md`);
