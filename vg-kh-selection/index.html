@@ -52,6 +52,7 @@
                     .selectAll("rect")
                     .data(newLevels)
                     .transition()
+                    .duration(0)
                     .attr("y", d=> histY(d))
                     .attr("height", d => height - (32 + histY(d)));
             }
